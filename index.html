@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>ResQ Suite</title>
+  <meta name="description" content="ResQ Suite: mis herramientas en un solo lugar, siempre actualizadas.">
+  <meta name="theme-color" content="#09090a">
+
+  <!-- PWA e iconos (todos generados a partir del logo de marca) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- Vista previa al compartir el enlace.
+       NOTA: og:image necesita una URL absoluta para funcionar en redes/mensajería;
+       reemplaza la ruta por la URL final, p. ej. https://TU-USUARIO.github.io/resq-suite/assets/social-preview.png -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ResQ Suite">
+  <meta property="og:description" content="Mis herramientas en un solo lugar, siempre actualizadas.">
+  <meta property="og:image" content="assets/social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Estilos: cada archivo tiene una responsabilidad (ver carpeta css/) -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/overlays.css">
+  <link rel="stylesheet" href="css/splash.css">
+</head>
+<body>
+
+  <!-- ========== Encabezado ========== -->
+  <header class="app-header">
+    <div class="app-header__row">
+      <div class="brand">
+        <img class="brand__logo" src="assets/logo.png" alt="" width="40" height="40">
+        <h1 class="brand__name">ResQ Suite</h1>
+      </div>
+      <button id="btnRefresh" class="btn btn--icon" type="button" aria-label="Actualizar herramientas">⟳</button>
+      <button id="btnSettings" class="btn btn--icon" type="button" aria-label="Ajustes">⚙</button>
+    </div>
+    <input id="search" class="input" type="search" placeholder="Buscar herramienta…" aria-label="Buscar herramienta">
+    <div id="chips" class="chips" role="group" aria-label="Filtros"></div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </header>
+
+  <!-- ========== Rejilla de herramientas (la rellena js/ui/grid.js) ========== -->
+  <main id="grid" class="tool-grid"></main>
+
+  <!-- ========== Diálogo: ajustes ========== -->
+  <dialog id="settingsDialog" class="dialog" aria-labelledby="settingsTitle">
+    <h2 id="settingsTitle" class="dialog__title">Ajustes</h2>
+    <form id="settingsForm">
+      <label class="field-label" for="fieldUser">Usuario de GitHub</label>
+      <input id="fieldUser" class="input" placeholder="tu-usuario" autocapitalize="off" autocorrect="off">
+
+      <label class="field-label" for="fieldTopic">Solo repos con este topic (opcional)</label>
+      <input id="fieldTopic" class="input" placeholder="ej. herramienta" autocapitalize="off">
+      <small class="field-hint">Vacío = todos tus repos (sin forks ni archivados). Al agregar el topic a un repo en GitHub, aparece aquí solo.</small>
+
+      <label class="field-label" for="fieldToken">Token de GitHub (opcional)</label>
+      <input id="fieldToken" class="input" type="password" placeholder="ghp_… / github_pat_…" autocomplete="off">
+      <small class="field-hint">Solo para ver repos privados o evitar el límite de 60 consultas/hora. Se guarda únicamente en este dispositivo.</small>
+
+      <div class="dialog__actions">
+        <button id="settingsCancel" class="btn" type="button">Cancelar</button>
+        <button class="btn btn--primary" type="submit">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========== Diálogo: apoya al desarrollador (texto en js/content.js) ========== -->
+  <dialog id="supportDialog" class="dialog" aria-labelledby="supportTitle">
+    <div class="dialog__header">
+      <img class="dialog__logo" src="assets/logo.png" alt="" width="44" height="44">
+      <h2 id="supportTitle" class="dialog__title"></h2>
+    </div>
+    <div id="supportBody" class="dialog__body"></div>
+    <p class="dialog__email">Escríbeme a <strong id="supportEmail"></strong></p>
+    <div class="dialog__actions">
+      <button id="supportClose" class="btn" type="button">Cerrar</button>
+      <button id="supportCopy" class="btn" type="button">Copiar correo</button>
+      <a id="supportMail" class="btn btn--primary" href="#">Escribir correo</a>
+    </div>
+  </dialog>
+
+  <!-- ========== Bienvenida: el sello (oculta hasta que js/ui/splash.js la muestra) ========== -->
+  <div id="splash" class="splash" role="dialog" aria-modal="true" aria-label="Bienvenida a ResQ Suite" tabindex="0" hidden>
+    <div class="splash__stage">
+      <div class="splash__seal">
+        <img src="assets/logo.png" alt="Sello de ResQ Suite" width="220" height="220">
+      </div>
+      <p class="splash__brand">ResQ Suite</p>
+      <p id="splashNote" class="splash__note"></p>
+      <p class="splash__hint">Toca para continuar</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
